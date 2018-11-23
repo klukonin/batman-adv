@@ -374,6 +374,12 @@ enum batadv_nl_attrs {
 	 */
 	BATADV_ATTR_ISOLATION_MASK,
 
+	/**
+	 * @BATADV_ATTR_BONDING: whether the data traffic going through the
+	 *  mesh will be sent using multiple interfaces at the same time.
+	 */
+	BATADV_ATTR_BONDING,
+
 	/* add attributes above here, update the policy in netlink.c */
 
 	/**
