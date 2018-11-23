@@ -350,6 +350,12 @@ enum batadv_nl_attrs {
 	 */
 	BATADV_ATTR_VLANID,
 
+	/**
+	 * @BATADV_ATTR_AGGREGATED_OGMS: whether the batman protocol messages
+	 *  of the mesh mesh interface shall be aggregated or not.
+	 */
+	BATADV_ATTR_AGGREGATED_OGMS,
+
 	/* add attributes above here, update the policy in netlink.c */
 
 	/**
