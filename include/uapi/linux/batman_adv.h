@@ -387,6 +387,14 @@ enum batadv_nl_attrs {
 	 */
 	BATADV_ATTR_BRIDGE_LOOP_AVOIDANCE,
 
+	/**
+	 * @BATADV_ATTR_DISTRIBUTED_ARP_TABLE: whether the distributed arp table
+	 *  feature is enabled. This feature uses a distributed hash table to
+	 *  answer ARP requests without flooding the request through the whole
+	 *  mesh.
+	 */
+	BATADV_ATTR_DISTRIBUTED_ARP_TABLE,
+
 	/* add attributes above here, update the policy in netlink.c */
 
 	/**
