@@ -144,6 +144,7 @@ static const struct nla_policy batadv_netlink_policy[NUM_BATADV_ATTR] = {
 	[BATADV_ATTR_ISOLATION_MARK]		= { .type = NLA_U32 },
 	[BATADV_ATTR_ISOLATION_MASK]		= { .type = NLA_U32 },
 	[BATADV_ATTR_BONDING]			= { .type = NLA_U8 },
+	[BATADV_ATTR_BRIDGE_LOOP_AVOIDANCE]	= { .type = NLA_U8 },
 };
 
 /**
@@ -283,6 +284,12 @@ static int batadv_netlink_mesh_put(struct sk_buff *msg,
 		       !!atomic_read(&bat_priv->bonding)))
 		goto nla_put_failure;
 
+#ifdef CONFIG_BATMAN_ADV_BLA
+	if (nla_put_u8(msg, BATADV_ATTR_BRIDGE_LOOP_AVOIDANCE,
+		       !!atomic_read(&bat_priv->bridge_loop_avoidance)))
+		goto nla_put_failure;
+#endif /* CONFIG_BATMAN_ADV_BLA */
+
 	batadv_hardif_put(primary_if);
 
 	genlmsg_end(msg, hdr);
@@ -395,6 +402,16 @@ static int batadv_netlink_set_mesh(struct sk_buff *skb, struct genl_info *info)
 
 		atomic_set(&bat_priv->bonding, !!nla_get_u8(attr));
 	}
+
+#ifdef CONFIG_BATMAN_ADV_BLA
+	if (info->attrs[BATADV_ATTR_BRIDGE_LOOP_AVOIDANCE]) {
+		attr = info->attrs[BATADV_ATTR_BRIDGE_LOOP_AVOIDANCE];
+
+		atomic_set(&bat_priv->bridge_loop_avoidance,
+			   !!nla_get_u8(attr));
+		batadv_bla_status_update(bat_priv->soft_iface);
+	}
+#endif /* CONFIG_BATMAN_ADV_BLA */
 
 	batadv_netlink_notify_mesh(bat_priv);
 
