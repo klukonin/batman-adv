@@ -469,6 +469,12 @@ enum batadv_nl_attrs {
 	 */
 	BATADV_ATTR_NETWORK_CODING,
 
+	/**
+	 * @BATADV_ATTR_ORIG_INTERVAL: defines the interval in milliseconds in
+	 *  which batman sends its protocol messages.
+	 */
+	BATADV_ATTR_ORIG_INTERVAL,
+
 	/* add attributes above here, update the policy in netlink.c */
 
 	/**
