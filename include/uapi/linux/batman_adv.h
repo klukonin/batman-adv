@@ -454,6 +454,14 @@ enum batadv_nl_attrs {
 	 */
 	BATADV_ATTR_LOG_LEVEL,
 
+	/**
+	 * @BATADV_ATTR_MULTICAST_MODE: whether multicast optimizations are
+	 *  enabled or disabled. If set to zero then all nodes in the mesh are
+	 *  going to use classic flooding for any multicast packet with no
+	 *  optimizations.
+	 */
+	BATADV_ATTR_MULTICAST_MODE,
+
 	/* add attributes above here, update the policy in netlink.c */
 
 	/**
