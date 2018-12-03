@@ -197,8 +197,19 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
 	struct batadv_bcast_packet *bcast_packet;
 	static const u8 stp_addr[ETH_ALEN] = {0x01, 0x80, 0xC2, 0x00,
 					      0x00, 0x00};
+	static const u8 stp_ad_addr[ETH_ALEN] = {0x01, 0x80, 0xC2, 0x00,
+					      0x00, 0x08};
+	static const u8 non_tpmr_addr[ETH_ALEN] = {0x01, 0x80, 0xC2, 0x00,
+					      0x00, 0x03};
+	static const u8 mvrp_addr[ETH_ALEN] = {0x01, 0x80, 0xC2, 0x00,
+					      0x00, 0x0D};
+	static const u8 all_bridges_addr[ETH_ALEN] = {0x01, 0x80, 0xC2, 0x00,
+					      0x00, 0x10};
+	static const u8 nearest_bridge_addr[ETH_ALEN] = {0x01, 0x80, 0xC2, 0x00,
+					      0x00, 0x0E};
 	static const u8 ectp_addr[ETH_ALEN] = {0xCF, 0x00, 0x00, 0x00,
 					       0x00, 0x00};
+		
 	enum batadv_dhcp_recipient dhcp_rcp = BATADV_DHCP_NO;
 	u8 *dst_hint = NULL, chaddr[ETH_ALEN];
 	struct vlan_ethhdr *vhdr;
@@ -263,6 +274,21 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
 	 * it might confuse the mesh when used with bridge loop avoidance.
 	 */
 	if (batadv_compare_eth(ethhdr->h_dest, stp_addr))
+		goto dropped;
+	
+	if (batadv_compare_eth(ethhdr->h_dest, stp_ad_addr))
+		goto dropped;
+	
+	if (batadv_compare_eth(ethhdr->h_dest, non_tpmr_addr))
+		goto dropped;
+	
+	if (batadv_compare_eth(ethhdr->h_dest, mvrp_addr))
+		goto dropped;
+	
+	if (batadv_compare_eth(ethhdr->h_dest, all_bridges_addr))
+		goto dropped;
+	
+	if (batadv_compare_eth(ethhdr->h_dest, nearest_bridge_addr))
 		goto dropped;
 
 	if (batadv_compare_eth(ethhdr->h_dest, ectp_addr))
