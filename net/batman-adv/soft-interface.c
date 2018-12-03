@@ -208,8 +208,7 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
 	static const u8 nearest_bridge_addr[ETH_ALEN] = {0x01, 0x80, 0xC2, 0x00,
 					      0x00, 0x0E};
 	static const u8 ectp_addr[ETH_ALEN] = {0xCF, 0x00, 0x00, 0x00,
-					       0x00, 0x00};
-		
+					       0x00, 0x00};		
 	enum batadv_dhcp_recipient dhcp_rcp = BATADV_DHCP_NO;
 	u8 *dst_hint = NULL, chaddr[ETH_ALEN];
 	struct vlan_ethhdr *vhdr;
